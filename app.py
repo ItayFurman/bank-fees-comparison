@@ -125,7 +125,7 @@ with st.sidebar:
                 )
 
         if st.button("🔄 הרץ חילוץ מלא (PDF + Excel)",
-                       type="primary", use_container_width=True):
+                       type="primary", width="stretch"):
             with st.spinner("מחלץ PDF + Excel ומשלב את התוצאות..."):
                 results = ingest_all()
             st.success(f"✅ הושלם — {sum(r.matched_fees for r in results)} "
@@ -455,7 +455,7 @@ with tab_structure:
                      "יחידה": f.unit, "הערה רגולטורית": f.notes}
                     for f in fees_in_part
                 ])
-                st.dataframe(fee_df, use_container_width=True, hide_index=True,
+                st.dataframe(fee_df, width="stretch", hide_index=True,
                               height=min(500, 60 + 38*len(fee_df)))
 
     with sub2:
@@ -495,7 +495,7 @@ with tab_deviation:
                 col.metric(kind, n)
 
         st.dataframe(
-            dev_df, use_container_width=True, hide_index=True,
+            dev_df, width="stretch", hide_index=True,
             height=min(700, 50 + len(dev_df) * 38),
             column_config={
                 "סוג חריגה": st.column_config.TextColumn(width="small"),
@@ -527,7 +527,7 @@ with tab_agent:
             unsafe_allow_html=True,
         )
     with scan_col:
-        if st.button("🔍 הרץ סריקה", type="primary", use_container_width=True):
+        if st.button("🔍 הרץ סריקה", type="primary", width="stretch"):
             raw_rows_by_bank = {}
             for f in available:
                 d = json.loads(f.read_text(encoding="utf-8"))
@@ -652,7 +652,7 @@ with tab_agent:
                               horizontal=False, key="bulk_s")
         with bcol3:
             st.markdown("&nbsp;")
-            if st.button("🔄 הפעל", use_container_width=True):
+            if st.button("🔄 הפעל", width="stretch"):
                 verdict = "אושר" if bulk_verdict == "אישור כממצא אמיתי" else "נדחה"
                 cat = (cat_filter[0] if scope == "לפי קטגוריה"
                        and len(cat_filter) == 1 else None)
@@ -835,12 +835,12 @@ with tab_agent:
         vcol1, vcol2, vcol3 = st.columns([1, 1, 2])
         with vcol1:
             if st.button("✅ אשר ליקוי", key=f"approve_{selected.finding_id}",
-                          use_container_width=True):
+                          width="stretch"):
                 update_verdict(selected.finding_id, "אושר")
                 st.rerun()
         with vcol2:
             if st.button("❌ false-positive", key=f"reject_{selected.finding_id}",
-                          use_container_width=True):
+                          width="stretch"):
                 update_verdict(selected.finding_id, "נדחה")
                 st.rerun()
         with vcol3:
@@ -865,7 +865,7 @@ with tab_agent:
         for i, (col, q) in enumerate(zip(sug_cols, followups)):
             with col:
                 if st.button(f"💡 {q}", key=f"sug_{selected.finding_id}_{i}",
-                              use_container_width=True):
+                              width="stretch"):
                     conv = load_conversation(selected.finding_id)
                     conv.messages.append(ChatMessage(role="user", content=q))
                     reply = agent.respond(selected, conv, q, comparison=comparison)
@@ -888,36 +888,40 @@ with tab_agent:
             st.rerun()
 
         # ─── סיכום וייצוא מייל ───
+        # שים לב: מפתחות session_state מתחילים ב-"data_" כדי שלא יתנגשו
+        # עם מפתחות הכפתורים (Streamlit שומר את ערך הלחיצה בלולאת המפתח).
         if conv.messages:
+            sum_key = f"data_summary_{selected.finding_id}"
+            email_key = f"data_email_{selected.finding_id}"
             ecol1, ecol2 = st.columns(2)
             with ecol1:
-                if st.button("📝 סכם שיחה", key=f"sum_{selected.finding_id}",
-                              use_container_width=True):
-                    st.session_state[f"summary_{selected.finding_id}"] = \
-                        agent.summarize(selected, conv)
+                if st.button("📝 סכם שיחה", key=f"btn_sum_{selected.finding_id}",
+                              width="stretch"):
+                    st.session_state[sum_key] = agent.summarize(selected, conv)
             with ecol2:
                 if st.button("✉️ הכן מייל למפקח",
-                              key=f"email_{selected.finding_id}",
-                              use_container_width=True):
-                    summary = st.session_state.get(f"summary_{selected.finding_id}", "")
-                    st.session_state[f"email_{selected.finding_id}"] = \
+                              key=f"btn_email_{selected.finding_id}",
+                              width="stretch"):
+                    summary = st.session_state.get(sum_key, "")
+                    st.session_state[email_key] = \
                         agent.draft_email(selected, conv, summary)
 
-            if f"summary_{selected.finding_id}" in st.session_state:
+            if sum_key in st.session_state:
                 st.markdown("#### 📝 סיכום השיחה")
-                st.success(st.session_state[f"summary_{selected.finding_id}"])
+                st.success(st.session_state[sum_key])
 
-            if f"email_{selected.finding_id}" in st.session_state:
+            if email_key in st.session_state:
                 st.markdown("#### ✉️ טיוטת מייל")
-                email_text = st.session_state[f"email_{selected.finding_id}"]
-                st.text_area("טיוטה (ניתן לערוך):", email_text, height=400,
-                              key=f"email_ta_{selected.finding_id}")
-                st.download_button(
-                    "⬇️ הורד טיוטת מייל",
-                    email_text.encode("utf-8"),
-                    file_name=f"email_{selected.bank}_{selected.finding_id}.txt",
-                    mime="text/plain", key=f"dl_{selected.finding_id}",
-                )
+                email_text = st.session_state[email_key]
+                if isinstance(email_text, str):
+                    st.text_area("טיוטה (ניתן לערוך):", email_text, height=400,
+                                  key=f"ta_email_{selected.finding_id}")
+                    st.download_button(
+                        "⬇️ הורד טיוטת מייל",
+                        email_text.encode("utf-8"),
+                        file_name=f"email_{selected.bank}_{selected.finding_id}.txt",
+                        mime="text/plain", key=f"dl_email_{selected.finding_id}",
+                    )
 
 
 # ============= TAB 5: שיח חופשי =============
@@ -945,7 +949,7 @@ with tab_free:
     ]
     for col, q in zip(qcols, quick_qs):
         with col:
-            if st.button(q, key=f"qq_{q[:15]}", use_container_width=True):
+            if st.button(q, key=f"qq_{q[:15]}", width="stretch"):
                 reply = agent.free_chat(q, by_bank,
                                           st.session_state.free_chat_history)
                 st.session_state.free_chat_history.append(
@@ -1005,5 +1009,5 @@ with tab_diag:
                     for k, v in data["fees"].items()
                     if k in FEE_BY_KEY
                 ])
-                st.dataframe(preview, use_container_width=True, hide_index=True,
+                st.dataframe(preview, width="stretch", hide_index=True,
                               height=min(500, 60 + 38 * len(preview)))
