@@ -6,7 +6,6 @@ __pycache__/
 venv/
 
 # Local data — לא לשתף בריפוזיטורי ציבורי
-output/
 agent_memory/
 pdfs/*.pdf
 !pdfs/.gitkeep

@@ -1,0 +1,90 @@
+{
+  "bank_id": "max",
+  "display_name": "מקס (Max)",
+  "source_file": "max.pdf",
+  "excel_file": null,
+  "source_summary": "PDF בלבד",
+  "pdf_quality": 80.94442659813684,
+  "pdf_engine": "pdfplumber",
+  "raw_row_count": 11,
+  "pdf_row_count": 11,
+  "excel_row_count": 0,
+  "fees": {
+    "early_repayment": {
+      "fee_key": "early_repayment",
+      "he_name": "פירעון מוקדם של הלוואה (עמלה תפעולית)",
+      "code": "3(א)(13)",
+      "part": "חלק 3 - אשראי",
+      "regulated": false,
+      "price_value": 40.0,
+      "price_unit": "ILS",
+      "price_text": "50% הנחה בביצוע באתר האינטרנט או באפליקציה של max | 40 ש\"ח לבקשה**",
+      "notes": "לבקשה · אינטרנט",
+      "source_label": "פירעון מוקדם / מיידי של עסקאות",
+      "matched_keyword": "פירעון מוקדם",
+      "match_score": 100,
+      "deviation": "",
+      "page": 1
+    },
+    "document_print": {
+      "fee_key": "document_print",
+      "he_name": "הפקה/הדפסה של מסמכים מהמאגר הממוחשב",
+      "code": "2(א)(3)",
+      "part": "חלק 2 - מידע, הודעות והתראות",
+      "regulated": false,
+      "price_value": 3.0,
+      "price_unit": "ILS",
+      "price_text": "פטור בביצוע באתר האינטרנט או במענה הקולי. לכרטיסי free max - דיוור שלא באמצעות האינטרנט - 3 ש\"ח",
+      "notes": "פטור/חינם · אינטרנט",
+      "source_label": "ח\"ש 11 | הפקה/הדפסה של מסמכים, המצויים במאגר הממוחשב, לבקשת הלקוח | מידע",
+      "matched_keyword": "הפקה/הדפסה של מסמכים",
+      "match_score": 100,
+      "deviation": "",
+      "page": 1
+    }
+  },
+  "unmatched_high_signal": [
+    {
+      "label": "ח\"ש 0 | ח\"ש 7.90 | ח\"ש 12.90 | קלאסיק",
+      "value": "5,000 ש\"ח ויותר | 1,750 ש\"ח ויותר",
+      "page": 1,
+      "best_keyword_score": 53
+    },
+    {
+      "label": "ח\"ש 0 | ח\"ש 9.90 | ח\"ש 15.90 | בינלאומי",
+      "value": "5,000 ש\"ח ויותר | 1,750 ש\"ח ויותר",
+      "page": 1,
+      "best_keyword_score": 71
+    },
+    {
+      "label": "ח\"ש 0 | ח\"ש 15.90 | ח\"ש 19.90 | זהב עסקי",
+      "value": "5,000 ש\"ח ויותר | 3,000 ש\"ח ויותר",
+      "page": 1,
+      "best_keyword_score": 62
+    },
+    {
+      "label": "ככל שלא קיים שער יציג בבנק ישראל תבוצע המרה, בכרטיסי ויזה: ממטבע העסקה המקורי, לדולר ארה\"ב לפי שער הנקבע על-ידי ויזה אינ",
+      "value": ")2( 3%",
+      "page": 1,
+      "best_keyword_score": 77
+    },
+    {
+      "label": "עד 300 ש״ח (לא כולל) עד 600 ש״ח (לא כולל) עד 1,500 ש״ח (לא כולל) מ-005,1 ש״ח (כולל) מינימום מקסימום | עד 300 ש״ח (לא כול",
+      "value": "10 ש״ח 20 ש״ח 40 ש״ח 0.15% 65 ש״ח 300 ש״ח | 10 ש״ח 20 ש״ח 40 ש״ח 0.15% 65 ש״ח 30",
+      "page": 1,
+      "best_keyword_score": 54
+    },
+    {
+      "label": "משיכת מזומן במכשיר אוטומטי באמצעות כרטיס נטען שאיננו מקושר לחשבון עו״ש",
+      "value": "1%",
+      "page": 1,
+      "best_keyword_score": 83
+    },
+    {
+      "label": "בכרטיס pre-paid -ל55 ש״ח לטעינה ראשונה, ו-72 ש״ח לכל טעינה נוספת. בכרטיס card cash -ל4 ש״ח לכל טעינה שאינה דרך הוראת קבע",
+      "value": "55 ש\"ח / 27 ש״ח",
+      "page": 1,
+      "best_keyword_score": 75
+    }
+  ]
+}

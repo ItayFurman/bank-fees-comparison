@@ -1,0 +1,14 @@
+{
+  "bank_id": "hapoalim",
+  "display_name": "בנק הפועלים",
+  "source_file": "small_single_3526.pdf",
+  "excel_file": "single_small_business_3526.xls",
+  "source_summary": "ללא נתון",
+  "pdf_quality": 5.0,
+  "pdf_engine": "pdfplumber (low quality)",
+  "raw_row_count": 0,
+  "pdf_row_count": 0,
+  "excel_row_count": 0,
+  "fees": {},
+  "unmatched_high_signal": []
+}
