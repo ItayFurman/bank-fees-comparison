@@ -1,0 +1,34 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+
+# Local data — לא לשתף בריפוזיטורי ציבורי
+output/
+agent_memory/
+pdfs/*.pdf
+!pdfs/.gitkeep
+
+# מסמכים רגישים (אופציונלי)
+regulations/
+
+# מערכת
+.DS_Store
+Thumbs.db
+*.log
+
+# קבצי דיבוג
+debug_*.txt
+debug_*.csv
+qa_report.csv
+
+# IDE
+.vscode/
+.idea/
+*.swp
+
+# סודות
+.env
+.streamlit/secrets.toml
